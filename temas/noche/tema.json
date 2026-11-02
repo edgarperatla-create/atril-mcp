@@ -1,0 +1,15 @@
+{
+  "nombre": "Noche",
+  "descripcion": "Fondo azul noche, títulos en Georgia, texto en Helvetica Neue, acento ámbar.",
+  "fuentes": { "titulo": "Georgia", "texto": "Helvetica Neue" },
+  "colores": {
+    "fondo": "11141C", "tarjeta": "1B2030", "tarjeta2": "262C40", "cabecera": "2E3752", "borde": "39435F",
+    "titulo": "F4F1EA", "texto": "D8DCE6", "apagado": "8E97AB",
+    "acento": "E3A35B", "acento2": "7FA7E0", "exito": "66C28F", "alerta": "E3765F",
+    "blanco": "FFFFFF", "oscuro": "111827", "borde_figura": "D5DCE5"
+  },
+  "series": ["acento", "acento2", "exito", "alerta", "titulo", "apagado"],
+  "fondo_portada": { "degradado": ["11141C", "2B3553"] },
+  "origen_obligatorio": true,
+  "ancho_caracter": 0.52
+}

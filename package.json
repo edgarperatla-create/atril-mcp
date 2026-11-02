@@ -1,0 +1,38 @@
+{
+  "name": "atril-mcp",
+  "version": "0.1.0",
+  "description": "Servidor MCP para que Claude cree, edite, anime, revise y exporte presentaciones de Keynote (macOS)",
+  "type": "module",
+  "engines": {
+    "node": ">=23.6"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "check": "tsc --noEmit",
+    "plantilla": "node tema/importar_plantilla.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.9",
+    "jszip": "3.10.1",
+    "pptxgenjs": "4.0.1",
+    "sharp": "0.35.1",
+    "typescript": "7.0.2"
+  },
+  "license": "MIT",
+  "os": [
+    "darwin"
+  ],
+  "keywords": [
+    "mcp",
+    "keynote",
+    "claude",
+    "presentations",
+    "macos",
+    "latex",
+    "matplotlib"
+  ]
+}

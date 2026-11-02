@@ -1,0 +1,31 @@
+{
+  "portada": {
+    "antetitulo": "Seminario de investigación · 2026",
+    "titulo": "Entornos de galaxias\nen campos profundos",
+    "subtitulo": "Motivación, metodología, resultados y conclusiones",
+    "autor": "Nombre Apellido  ·  Institución  ·  2026"
+  },
+  "divisor": {
+    "numero": "01",
+    "titulo": "Motivación y contexto",
+    "subtitulo": "¿Por qué importa el entorno local?"
+  },
+  "contenido": {
+    "antetitulo": "Trabajo futuro",
+    "titulo": "Próximos pasos",
+    "cuerpo": "Seguimiento espectroscópico para medir la sobredensidad en tres dimensiones.\nFunción de correlación de dos puntos para estimar la longitud de correlación.\nExtender el análisis a bines de masa de halo.\nPresupuesto de error con sub-campos del mismo tamaño que el campo principal.\nPreparar el artículo para su envío.",
+    "pie": "07 · Conclusiones y trabajo futuro"
+  },
+  "figura": {
+    "antetitulo": "Caso A",
+    "titulo": "La señal frente al corrimiento al rojo",
+    "origen": "Datos sintéticos; gráfica propia",
+    "cuerpo": "La señal decrece con el corrimiento al rojo.\nEl error fotométrico la suprime.\nCon el error real, la señal es comparable a la observada.",
+    "pie": "04 · Resultados — Caso A"
+  },
+  "cierre": {
+    "titulo": "Gracias",
+    "subtitulo": "Preguntas y discusión",
+    "autor": "Nombre Apellido · Institución"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+trabajo/
+tema/.importar/
+__pycache__/
+.DS_Store
+temas/*/plantilla.pptx
+temas/*/recursos/

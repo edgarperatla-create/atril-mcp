@@ -1,0 +1,15 @@
+{
+  "nombre": "Papel",
+  "descripcion": "Fondo claro, todo en Avenir Next, acento terracota.",
+  "fuentes": { "titulo": "Avenir Next", "texto": "Avenir Next" },
+  "colores": {
+    "fondo": "FAFAF7", "tarjeta": "EEF0F4", "tarjeta2": "E2E6EE", "cabecera": "D3DAE6", "borde": "C3CBD8",
+    "titulo": "1B2433", "texto": "2F3A4C", "apagado": "5F6B7E",
+    "acento": "B85A1E", "acento2": "2F6DB5", "exito": "2E8555", "alerta": "B93A2E",
+    "blanco": "FFFFFF", "oscuro": "111827", "borde_figura": "D5DCE5"
+  },
+  "series": ["acento", "acento2", "exito", "alerta", "titulo", "apagado"],
+  "fondo_portada": { "degradado": ["FAFAF7", "E4E8F0"] },
+  "origen_obligatorio": false,
+  "ancho_caracter": 0.52
+}
