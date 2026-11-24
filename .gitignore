@@ -5,3 +5,4 @@ __pycache__/
 .DS_Store
 temas/*/plantilla.pptx
 temas/*/recursos/
+dist/

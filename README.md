@@ -1,48 +1,51 @@
 # Atril
 
-**Servidor MCP para que Claude haga presentaciones de Keynote**: crearlas con un formato
-consistente, leerlas, editarlas, animarlas, revisarlas y exportarlas. Pensado para trabajo
-científico y académico: ecuaciones en LaTeX real, gráficas científicas con barras de error y
-escalas logarítmicas, figuras con pie de origen y una revisión automática antes de presentar.
+**An MCP server that lets Claude build Apple Keynote presentations**: create them with a
+consistent theme, read, edit, animate, review and export them. Built for scientific and
+academic work: real LaTeX equations, scientific charts with error bars and log scales,
+figures with source lines, and an automatic quality review before you present.
 
-> *An MCP server that lets Claude build, read, edit, animate, review and export Apple Keynote
-> presentations on macOS, with configurable themes, real LaTeX equations and scientific
-> charts. Tool names and docs are in Spanish for now.*
+[Español](README.es.md) · Status: **in development** (0.1). Tested with Keynote Creator Studio
+15.3.1 on macOS 26. macOS only.
 
-Estado: **en desarrollo** (0.1). Probado con Keynote Creator Studio 15.3.1 en macOS 26.
+> Tool names are in Spanish (e.g. `crear_con_formato`, `diapositiva_figura`); their
+> descriptions, parameters' help and the server instructions that Claude reads are in English.
+> A glossary is in [Tools](#tools).
 
-## Qué puede hacer
+## What it can do
 
-- **Formato con temas:** `crear_con_formato` y una herramienta por tipo de diapositiva
-  (portada, divisor, contenido, figura, tabla, cierre). El tema fija paleta, tipografías y
-  fondos; trae dos (`noche`, oscuro, y `papel`, claro) y puedes crear el tuyo.
-- **Contenido:** tablas con estilo, gráficas nativas de Keynote, ecuaciones LaTeX
-  (vectoriales), gráficas científicas con matplotlib, figuras con la paleta (rectángulos,
-  flechas, estrellas, bocadillos…), cifras destacadas, tarjetas, agenda y video.
-- **Animación:** viñetas que entran una por clic, Magic Move (aparecer, mover, escalar,
-  resaltar, revelar series), 44 transiciones.
-- **Edición:** buscar y reemplazar en toda la presentación, alinear y distribuir objetos,
-  fusionar y ordenar celdas, mover, ocultar o borrar diapositivas.
-- **Revisión:** `revisar_presentacion` reporta texto fuera de la diapositiva, cuerpo que
-  Keynote encoge, contraste bajo (medido en la imagen real), figuras sin pie de origen,
-  textos de muestra sobrantes, letra pequeña y diapositivas sin notas.
-- **Exportar:** PDF (también con las notas debajo de cada diapositiva), PowerPoint, PNG,
-  JPEG, video, HTML, Keynote ’09 y GIF animado.
+- **Themed formatting:** `crear_con_formato` plus one tool per slide type (title, section
+  divider, content, figure, table, closing). A theme fixes palette, fonts and backgrounds; two
+  are included (`noche`, dark, and `papel`, light) and you can write your own.
+- **Content:** styled tables, native Keynote charts, vector LaTeX equations, matplotlib
+  scientific charts, palette shapes (rectangles, arrows, stars, speech bubbles…), highlighted
+  figures, cards, agenda and video.
+- **Animation:** bullets that enter one per click, Magic Move (appear, move, scale, highlight,
+  reveal series), 44 transitions.
+- **Editing:** find and replace across the deck, align and distribute objects, merge and sort
+  table cells, move, hide or delete slides.
+- **Review:** `revisar_presentacion` reports text outside the slide, body text Keynote
+  shrinks, low contrast (measured on the rendered image), figures without a source line,
+  leftover placeholder text, tiny fonts and slides without speaker notes.
+- **Export:** PDF (also with notes under each slide), PowerPoint, PNG, JPEG, video, HTML,
+  Keynote '09 and animated GIF.
 
-**Tus archivos nunca se modifican:** Atril trabaja sobre copias en su carpeta de trabajo.
+**Your files are never modified:** Atril works on copies in its own working folder.
 
-## Requisitos
+## Requirements
 
-- macOS con Keynote. Atril lo controla por AppleScript/JXA: la primera vez macOS pide
-  permiso de Automatización para controlar Keynote.
-- Node ≥ 23.6 (corre TypeScript directo, sin compilar).
-- Opcionales:
-  - `ecuacion`: TeX Live o MacTeX (`pdflatex`).
-  - `grafica_cientifica`: Python 3 con matplotlib y numpy (`ATRIL_PYTHON` para elegir el
-    intérprete).
-  - Exportar a GIF y las pruebas de video: ffmpeg.
+- macOS with Keynote. Atril drives it through AppleScript/JXA; the first time, macOS asks for
+  Automation permission to control Keynote.
+- Node ≥ 23.6 (runs TypeScript directly, no build step).
+- Optional:
+  - `ecuacion`: TeX Live or MacTeX (`pdflatex`).
+  - `grafica_cientifica`: Python 3 with matplotlib and numpy (`ATRIL_PYTHON` picks the
+    interpreter).
+  - GIF export and the video tests: ffmpeg.
 
-## Instalación
+## Install
+
+From a clone:
 
 ```bash
 git clone https://github.com/edgarperatla-create/atril-mcp.git
@@ -52,102 +55,112 @@ git clone https://github.com/edgarperatla-create/atril-mcp.git
 cd atril-mcp && npm install
 ```
 
-Registrar en Claude Code (alcance de usuario: lo ven todas las sesiones):
+Register it in Claude Code (user scope: every session sees it):
 
 ```bash
 claude mcp add --scope user atril -- node "$PWD/src/index.ts"
 ```
 
-Con otro tema o carpeta de trabajo:
+With another theme or working folder:
 
 ```bash
-claude mcp add --scope user atril -e ATRIL_TEMA=papel -e ATRIL_DIR="$HOME/Presentaciones/Atril" -- node "$PWD/src/index.ts"
+claude mcp add --scope user atril -e ATRIL_TEMA=papel -e ATRIL_DIR="$HOME/Presentations/Atril" -- node "$PWD/src/index.ts"
 ```
 
-| Variable | Qué fija | Por omisión |
+Once published to npm, no clone is needed:
+
+```bash
+claude mcp add --scope user atril -- npx -y atril-mcp
+```
+
+| Variable | What it sets | Default |
 |---|---|---|
-| `ATRIL_TEMA` | nombre de un tema de `temas/` o ruta a la carpeta de un tema | `noche` |
-| `ATRIL_DIR` | carpeta de trabajo (`copias/`, `salidas/`, `vistas/`…) | `~/Atril` |
-| `ATRIL_PYTHON` | Python con matplotlib para `grafica_cientifica` | el primero que encuentre |
+| `ATRIL_TEMA` | name of a theme in `temas/`, or a path to a theme folder | `noche` |
+| `ATRIL_DIR` | working folder (`copias/`, `salidas/`, `vistas/`…) | `~/Atril` |
+| `ATRIL_PYTHON` | Python with matplotlib for `grafica_cientifica` | first one found |
 
-## Cómo pedir una presentación
+## How to ask for a deck
 
-Basta con decirle a Claude qué quieres; las instrucciones del servidor le enseñan el flujo
-(crear con formato, una herramienta por diapositiva, mirar cada una, revisar y exportar):
+Just tell Claude what you want; the server instructions teach it the workflow (create with
+the theme, one tool per slide, look at each one, review, export):
 
-> Hazme una presentación de 10 diapositivas sobre el avance del proyecto: portada, un
-> divisor por sección, las figuras de `figuras/` con su pie de origen, la ecuación del
-> estimador, notas con el guion y viñetas animadas en las conclusiones. Expórtala a PDF.
+> Make me a 10-slide deck on the project status: title slide, a divider per section, the
+> figures in `figures/` with their source lines, the estimator's equation, speaker notes with
+> the script and animated bullets in the conclusions. Export it to PDF.
 
-> Abre `charla.pptx` y dime qué diapositivas tienen texto encogido o figuras sin pie de
-> origen.
+> Open `talk.pptx` and tell me which slides have shrunken text or figures without a source
+> line.
 
-## Temas
+Slide text is written in whatever language you ask for; only tool names are Spanish.
 
-Un tema es una carpeta con `tema.json`: roles de color (fondo, tarjeta, título, texto,
-acento…), tipografías de títulos y de texto, fondo de portada (degradado o imagen con velo)
-y si las figuras deben llevar pie de origen. `npm run plantilla -- <tema>` genera su
-plantilla de Keynote. Detalles y ejemplo en [`temas/README.md`](temas/README.md).
+## Themes
 
-## Herramientas
+A theme is a folder with `tema.json`: color roles (background, card, title, text, accent…),
+title and body fonts, the cover background (gradient or image with veil) and whether figures
+must carry a source line. `npm run plantilla -- <theme>` builds its Keynote template. Details
+and an example in [`temas/README.md`](temas/README.md).
 
-| Herramienta | Qué hace |
+## Tools
+
+Tool names are Spanish; the glossary shows what each one is.
+
+| Tool | What it does |
 |---|---|
-| `listar_presentaciones_abiertas` | id, nombre, archivo, diapositivas, tema, tamaño, si es editable |
-| `abrir` | abre una copia de un `.key`/`.pptx`/`.ppt` |
-| `crear` | presentación nueva con un tema de Keynote; la guarda en la carpeta de trabajo |
-| `leer_presentacion` | por diapositiva: diseño, título, cuerpo, notas, transición, objetos (con `detalle`: posiciones y celdas) |
-| `agregar_diapositiva`, `poner_texto`, `notas` | diapositivas, textos y notas del presentador |
-| `exportar` | PDF, PPTX, PNG, JPEG, video, HTML, Keynote ’09 o GIF; `etapas` (un paso de animación por imagen); PDF `con_notas` |
-| `ver_diapositiva` | imagen de una diapositiva, para que Claude la revise |
-| `guardar`, `cerrar` | solo para presentaciones de la carpeta de trabajo |
-| `crear_con_formato` | presentación nueva con el tema activo (trae prototipos ocultos al final) |
-| `diapositiva_portada` / `_divisor` / `_contenido` / `_figura` / `_tabla` / `_cierre` | una diapositiva del formato; la figura va sobre tarjeta blanca con pie de origen |
-| `grafica` | gráfica nativa de Keynote (17 tipos) con la paleta y leyenda |
-| `grafica_cientifica` | matplotlib → PDF vectorial: barras de error, cotas, log/symlog, bandas, histogramas, segundo eje, fórmulas `$…$` |
-| `tabla`, `editar_celdas`, `tabla_estructura` | tabla con el estilo del tema; editar; fusionar, ordenar, filas y columnas |
-| `ecuacion` | LaTeX real (amsmath y paquetes extra) como imagen vectorial |
-| `forma` | figuras vectoriales con la paleta y texto encima |
-| `cifras_destacadas`, `tarjetas_numeradas`, `agenda`, `diapositiva_video` | componentes del formato |
-| `estilo_texto` | tipografía (de títulos o de texto), tamaño, color, negrita, cursiva |
-| `transicion`, `revelar_por_pasos`, `animar_cambio`, `revelar_series` | transiciones y animaciones con Magic Move |
-| `insertar_medio`, `linea`, `duplicar_diapositiva`, `mover_objeto`, `borrar_objeto` | medios y objetos |
-| `alinear_objetos`, `distribuir_objetos`, `bloquear_objeto` | disposición |
-| `buscar_reemplazar` | en textos, notas y celdas de toda la presentación |
-| `borrar_diapositiva`, `mover_diapositiva`, `ocultar_diapositiva` | manejo de diapositivas (los prototipos están protegidos) |
-| `diapositivas_desde_imagenes` | una diapositiva por imagen |
-| `revisar_presentacion` | reporte de problemas por gravedad, con hoja de contacto |
-| `presentar` | iniciar, avanzar, retroceder, detener (ocupa la pantalla) |
+| `listar_presentaciones_abiertas` (list open) | id, name, file, slides, theme, size, whether editable |
+| `abrir` (open) | opens a copy of a `.key`/`.pptx`/`.ppt` |
+| `crear` (create) | new presentation with a built-in Keynote theme, saved in the working folder |
+| `leer_presentacion` (read) | per slide: layout, title, body, notes, transition, objects (with `detalle`: positions and cells) |
+| `agregar_diapositiva`, `poner_texto`, `notas` | slides, text and speaker notes |
+| `exportar` (export) | PDF, PPTX, PNG, JPEG, video, HTML, Keynote '09 or GIF; `etapas` (one animation step per image); PDF `con_notas` |
+| `ver_diapositiva` (view slide) | image of a slide, so Claude can inspect it |
+| `guardar`, `cerrar` (save, close) | only for presentations in the working folder |
+| `crear_con_formato` (create with theme) | new presentation with the active theme (hidden prototypes at the end) |
+| `diapositiva_portada` / `_divisor` / `_contenido` / `_figura` / `_tabla` / `_cierre` | title / divider / content / figure / table / closing slide; figures go on a white card with a source line |
+| `grafica` (chart) | native Keynote chart (17 types) with the palette and legend |
+| `grafica_cientifica` (scientific chart) | matplotlib → vector PDF: error bars, upper limits, log/symlog, bands, histograms, second axis, `$…$` formulas |
+| `tabla`, `editar_celdas`, `tabla_estructura` | themed table; edit cells; merge, sort, add/remove rows and columns |
+| `ecuacion` (equation) | real LaTeX (amsmath and extra packages) as a vector image |
+| `forma` (shape) | vector shapes in the palette with text on top |
+| `cifras_destacadas`, `tarjetas_numeradas`, `agenda`, `diapositiva_video` | theme components |
+| `estilo_texto` (text style) | title/body font, size, color, bold, italic |
+| `transicion`, `revelar_por_pasos`, `animar_cambio`, `revelar_series` | transitions and Magic Move animations |
+| `insertar_medio`, `linea`, `duplicar_diapositiva`, `mover_objeto`, `borrar_objeto` | media and objects |
+| `alinear_objetos`, `distribuir_objetos`, `bloquear_objeto` | layout (align, distribute, lock) |
+| `buscar_reemplazar` (find/replace) | across text, notes and table cells of the whole deck |
+| `borrar_diapositiva`, `mover_diapositiva`, `ocultar_diapositiva` | slide management (prototypes are protected) |
+| `diapositivas_desde_imagenes` | one slide per image |
+| `revisar_presentacion` (review) | problem report by severity, with a contact sheet |
+| `presentar` (present) | start, next, previous, stop (takes over the screen) |
 
-## Reglas que el código hace cumplir
+## Rules the code enforces
 
-- **Copias, siempre.** `abrir` copia el archivo a la carpeta de trabajo antes de abrirlo.
-- **Solo es editable lo que tiene archivo dentro de la carpeta de trabajo.** Lo demás (tus
-  presentaciones, documentos sin guardar) se puede leer, ver y exportar, pero no modificar,
-  guardar ni cerrar.
-- **Nada de borradores en iCloud:** `crear` y `crear_con_formato` guardan de inmediato en la
-  carpeta de trabajo (sin archivo, Keynote deja un `Untitled N.key` en iCloud al exportar).
-- **Exportar nunca sobrescribe**: agrega `_2`, `_3`…
-- Los textos y rutas viajan como argumentos de `osascript`, nunca interpolados en los scripts.
-  LaTeX se compila sin shell-escape y sin `\input`.
+- **Copies, always.** `abrir` copies the file into the working folder before opening it.
+- **Only what has a file inside the working folder is editable.** Everything else (your own
+  presentations, unsaved documents) can be read, viewed and exported, but not modified, saved
+  or closed.
+- **No iCloud drafts:** `crear` and `crear_con_formato` save immediately in the working folder
+  (otherwise Keynote leaves an `Untitled N.key` in iCloud on export).
+- **Export never overwrites**: it appends `_2`, `_3`…
+- Texts and paths travel as `osascript` arguments, never interpolated into scripts. LaTeX is
+  compiled without shell-escape and without `\input`.
 
-## Límites de Keynote por script
+## Keynote scripting limits
 
-No se pueden fijar por script: el relleno de las figuras nativas, el espaciado de letras, la
-alineación de párrafo, subíndices en texto, el color de cada serie de una gráfica nativa, los
-bordes de tabla, los enlaces entre diapositivas, agrupar objetos o el orden de apilado. Atril
-rodea varios: figuras y ecuaciones vectoriales, prototipos en la plantilla, Magic Move para
-animar, leyendas propias. Duplicar o mover diapositivas **entre dos documentos** cierra Keynote
-de golpe: Atril no lo hace. Detalles técnicos en [`CLAUDE.md`](CLAUDE.md).
+Not settable by script: native shape fill, letter spacing, paragraph alignment, subscripts in
+text, the color of each series in a native chart, table borders, slide links, grouping, and
+z-order. Atril works around several: vector shapes and equations, prototypes in the template,
+Magic Move for animation, custom legends. Duplicating or moving slides **between two
+documents** crashes Keynote, so Atril never does it. Technical details in
+[`CLAUDE.md`](CLAUDE.md) (Spanish).
 
-## Desarrollo
+## Development
 
 ```bash
 npm run check
 ```
 
-Las pruebas hablan con el servidor por MCP real (stdio), abren Keynote y usan su propia carpeta
-de trabajo en `trabajo/` (con archivos de prueba sintéticos que generan ellas mismas):
+Tests talk to the server over real MCP (stdio), open Keynote and use their own working folder
+in `trabajo/` (with synthetic fixtures they generate themselves):
 
 ```bash
 node test/fase1.ts
@@ -157,30 +170,28 @@ node test/fase1.ts
 node test/fase2.ts
 ```
 
-`fase1` núcleo · `fase2` formato (`ATRIL_TEMA=papel` para el tema claro) · `fase3` gráficas,
-tablas, transiciones y medios · `fase4` animaciones · `fase5` revisión · `fase6` ecuaciones,
-figuras y componentes · `fase8` edición y exportación · `fase9` gráficas científicas.
-`test/arranque_frio.ts` **cierra Keynote** (se niega si hay documentos abiertos).
+`fase1` core · `fase2` theme format (`ATRIL_TEMA=papel` for the light theme) · `fase3` charts,
+tables, transitions and media · `fase4` animations · `fase5` review · `fase6` equations,
+shapes and components · `fase8` editing and export · `fase9` scientific charts.
+`test/arranque_frio.ts` **quits Keynote** (it refuses if documents are open).
 
-## Seguridad
+## Security
 
-Atril controla Keynote en tu Mac con permisos de Automatización. Solo modifica archivos dentro
-de su carpeta de trabajo, pero **puede leer cualquier archivo que se le indique** (por ejemplo,
-`abrir` o `insertar_medio`). Si un texto malicioso engañara a Claude (inyección de prompt
-desde una página, un correo o un documento), en teoría podría meter un archivo local en una
-presentación; el archivo no sale de tu Mac a menos que compartas esa presentación. Revisa lo
-que Claude va a insertar antes de compartir una presentación, y no le pidas trabajar con
-material de fuentes en las que no confías.
+Atril controls Keynote on your Mac with Automation permission. It only modifies files inside
+its working folder, but it **can read any file it is pointed at** (for example through `abrir`
+or `insertar_medio`). If malicious text tricked Claude (prompt injection from a web page, an
+email or a document), it could in theory put a local file into a presentation; the file does
+not leave your Mac unless you share that presentation. Check what Claude is about to insert
+before sharing a deck, and don't ask it to work with material from sources you don't trust.
 
-Para reportar un problema de seguridad, abre un issue sin detalles sensibles o escribe al
-autor por GitHub.
+To report a security issue, open an issue without sensitive details or contact the author on
+GitHub.
 
-## Soporte
+## Support
 
-Es un proyecto personal que se mantiene en el tiempo libre: los issues y pull requests son
-bienvenidos, pero no hay compromiso de respuesta ni de fechas. Probado solo con la versión de
-Keynote y macOS indicadas arriba.
+A personal project maintained in spare time: issues and pull requests are welcome, but there
+is no commitment on response or dates. Tested only with the Keynote and macOS versions above.
 
-## Licencia
+## License
 
-MIT. Ver [`LICENSE`](LICENSE).
+MIT. See [`LICENSE`](LICENSE).
