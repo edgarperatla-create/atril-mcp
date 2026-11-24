@@ -1,6 +1,6 @@
 {
   "name": "atril-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server that lets Claude build, edit, animate, review and export Apple Keynote presentations on macOS, with themes, real LaTeX equations and scientific charts",
   "type": "module",
   "engines": {
@@ -62,5 +62,6 @@
   "bugs": {
     "url": "https://github.com/edgarperatla-create/atril-mcp/issues"
   },
-  "author": "Edgar Peralta"
+  "author": "Edgar Peralta",
+  "mcpName": "io.github.edgarperatla-create/atril-mcp"
 }

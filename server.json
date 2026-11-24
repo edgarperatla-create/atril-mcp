@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.json",
+  "name": "io.github.edgarperatla-create/atril-mcp",
+  "description": "Build, edit, animate, review and export Apple Keynote decks with Claude: themes, LaTeX equations, scientific charts (macOS).",
+  "repository": {
+    "url": "https://github.com/edgarperatla-create/atril-mcp",
+    "source": "github"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "atril-mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "ATRIL_TEMA",
+          "description": "Theme name (noche, papel) or path to a theme folder",
+          "isRequired": false,
+          "default": "noche"
+        },
+        {
+          "name": "ATRIL_DIR",
+          "description": "Working folder for copies and outputs",
+          "isRequired": false,
+          "default": "~/Atril"
+        },
+        {
+          "name": "ATRIL_PYTHON",
+          "description": "Python with matplotlib for grafica_cientifica",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}
